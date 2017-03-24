@@ -1,0 +1,70 @@
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		      <!-- 数据库方言设置 -->
+		     <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		 <!-- 数据库连接信息 -->
+		     <property name="connection.url">jdbc:mysql://127.0.0.1:3306/hibernate_01</property>
+		     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		     <property name="connection.username">root</property>
+		     <property name="connection.password">root</property>
+		     <!-- 一般配置 -->
+		      <property name="show_sql">true</property>
+		      <property name="format_sql">false</property>
+		      <!-- 
+		         create :先创建表，再删除表
+		         create-drop:启动时创建比表，关闭时删除表
+		         update:如果表结构不一致，就创建或更新表
+		         validate:启动时验证表结构，如果不一致就抛异常
+		       -->
+		      <property name="hibernate.hbm2ddl.auto">update</property>
+		        <!-- 
+		        
+		                                                     事务的隔离级别
+		                                      隔离级别        对应的整数表示
+		           READ UNCOMMITED	1
+			       READ COMMITED	2
+			       REPEATABLE READ	4
+			       SERIALIZEABLE	8                           
+		       <property name="hibernate.connection.isolation">2</property>
+		         -->
+		         <!-- 连接池的设定 -->
+		         <!-- 使用c3p0连接池  配置 连接池提供的供应商 -->
+		         <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+		    <!--       连接池中数据库中可用的连接的最少数目 -->
+		         <property name="hibernate.c3p0.min_size">5</property>
+		       <!--    连接池中数据库中的可用的连接的最多数目 -->
+		         <property name="hibernate.c3p0.max_size">10</property>
+		  <!--          如果数据库中的某个空闲的连接超过timeout未被使用，就会从连接池中被清除 -->
+		           <property name="hibernate.c3p0.timeout">120</property>
+		  <!--          以每3000秒的时间间隔来检测数据库中的空闲连接，以秒为单位 -->
+		           <property name="hibernate.c3p0.idle_test_period">3000</property> 
+		           
+		       
+		        <!-- 配置二级缓存，默认是未打开的 -->
+		            <!-- <property name="hibernate.cache.provider_class"> net.sf.ehcache.hibernate.EhCacheProvider</property> -->
+		          <!-- 指定要使用的缓存的提供商，这也就打开了二级缓存 -->
+		            <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		              <!-- 开启二级缓存 -->
+		             <property name="hibernate.cache.use_second_level_cache">true</property>
+		             <!-- 开启缓存查询 -->
+		             <property name="hibernate.cache.use_query_cache">true</property>
+		            
+		              <!--指定需要使用的二级缓存的实体类 -->
+		               <class-cache usage="read-write" class="cn.itcast.hibernate.m_session_cache2.Department"/>
+		               <class-cache usage="read-write" class="cn.itcast.hibernate.m_session_cache2.Employee"/>
+		               <collection-cache usage="read-write" collection="cn.itcast.hibernate.m_session_cache2.Department.employees"/>
+		 <!-- 导入映射文件 -->
+	<!-- <mapping resource="cn/itcast/hibernate/e_hbm_id/User.hbm.xml"/> -->
+		 
+	</session-factory>
+</hibernate-configuration>

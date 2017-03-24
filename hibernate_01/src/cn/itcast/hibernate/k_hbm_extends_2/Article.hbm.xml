@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.hibernate.k_hbm_extends_2">
+
+   <!-- 
+                    继承结构映射；每个类一张表，抽象类也有一张表
+                  每个类的映射都要写表名 。
+                  子类映射要指定一个外键列<key column="id"></key>             
+            
+      
+    -->
+
+    <class name="Article" table="atricle">
+      
+           <id name="id">
+                <generator class="native"/>
+           </id>
+	   
+	     <property name="title"></property>
+      <property name="content" type="text" length="5000"/>
+	     <!-- 子类：Topic -->
+	       <joined-subclass name="Topic" table="topic">
+	            <key column="id"></key>
+	             <property name="type"></property>
+	       </joined-subclass>
+	      <!-- 子类：Reply -->
+	       <joined-subclass name="Reply" table="reply">
+	            <key column="id"></key>
+	             <property name="reply"></property>
+	       </joined-subclass>
+    </class>
+</hibernate-mapping>

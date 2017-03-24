@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.hibernate.k_hbm_extends_3">
+
+   <!-- 
+                              继承映射结构:每个具体类对应一张表，抽象类没有表
+                               如果类是抽象的，就要写上abstract="true"，这样就不会创建表了，也不需要table属性了
+                             此时不可以使用identity主键生成策略了，因为继承结构要求在整个映射结构中，所有的主键值不能重复                      
+    -->
+
+    <class name="Article" abstract="true" table="article" >
+      
+           <id name="id">
+               <!-- increment策略，由Hibernate维护的主键增长(不推荐使用) -->
+                <generator class="increment"/>
+           </id>
+              <property name="title"></property>
+              <property name="content" type="text" length="50000"></property>
+	         <!-- 子类： Topic-->
+	       <union-subclass name="Topic" table="topic">
+	             <property name="type"></property>
+	       </union-subclass>
+	         <!-- 子类：Reply -->
+	          <union-subclass name="Reply" table="reply">
+	               <property name="reply"></property>
+	          </union-subclass>
+    </class>
+</hibernate-mapping>

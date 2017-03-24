@@ -1,0 +1,36 @@
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		      <!-- 数据库方言设置 -->
+		     <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		 <!-- 数据库连接信息 -->
+		     <property name="connection.url">jdbc:mysql://127.0.0.1:3306/hibernate_01</property>
+		     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		     <property name="connection.username">root</property>
+		     <property name="connection.password">root</property>
+		     <!-- 一般配置 -->
+		      <property name="show_sql">true</property>
+		      <property name="format_sql">false</property>
+		      <!-- 
+		         create :先创建表，再删除表
+		         create-drop:启动时创建比表，关闭时删除表
+		         update:如果表结构不一致，就创建或更新表
+		         validate:启动时验证表结构，如果不一致就抛异常
+		       -->
+		      <property name="hibernate.hbm2ddl.auto">update</property>
+		      <!-- 当配置为thread,sessionFactory的getCurrentSession()方法就可以使用了 -->
+		       <property name="hibernate.current_session_context_class">thread</property>
+		 <!-- 导入映射文件 -->
+	<!-- <mapping resource="cn/itcast/hibernate/e_hbm_id/User.hbm.xml"/> -->
+		 
+	</session-factory>
+</hibernate-configuration>
